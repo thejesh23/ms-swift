@@ -235,6 +235,7 @@ class ModelLoader(BaseModelLoader):
             HfConfigFactory.set_config_attr(config, 'rope_scaling', self.rope_scaling)
         if self.max_model_len:
             HfConfigFactory.set_max_model_len(config, self.max_model_len)
+            self.model_info.max_model_len = self.max_model_len
         num_labels = self.model_info.num_labels or getattr(config, 'num_labels', None)
         if num_labels and self.model_info.task_type in ['seq_cls', 'reranker']:
             self.model_info.num_labels = num_labels
