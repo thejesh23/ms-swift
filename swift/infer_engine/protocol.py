@@ -321,8 +321,12 @@ class EmbeddingRequest(RequestConfig, MultiModalRequestMixin, EmbeddingRequestMi
 
 @dataclass
 class ChatCompletionRequest(RequestConfig, MultiModalRequestMixin, ChatCompletionRequestMixin):
+    # OpenAI's current name for `max_tokens` in chat completions.
+    max_completion_tokens: Optional[int] = None
 
     def __post_init__(self):
+        if self.max_tokens is None and self.max_completion_tokens is not None:
+            self.max_tokens = self.max_completion_tokens
         RequestConfig.__post_init__(self)
         MultiModalRequestMixin.__post_init__(self)
         ChatCompletionRequestMixin.__post_init__(self)
